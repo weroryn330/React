@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <title>React Basics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            background-color: #f5e8cb;
+            color: #691111;
+        }
+    </style>
+    <!-- Needed scripts -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js"></script>
+
+    <!-- Don't use this in production: -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+</head>
+
+<body>
+    <div id="greeting"></div>
+    <div id="languages"></div>
+
+    <script type="text/babel">
+        class Greeting extends React.Component {
+            // JSX
+            // extends React.Component wymaga użycia render()
+            // zmienne renderowane są tylko raz, w czasie renderowania komponentu
+            state = {
+                title: 'Witaj w ReactJS'
+            }
+            render() {
+                // Mozna zwracac tylko jeden element, czyli mozna zamknac np. w div wszystkie pozostale.
+                const changeGreeting = () => {
+                    this.setState({
+                        title: "Drogi developerze, właśnie wkraczasz w świat ReactJS!"
+                    })
+                }
+
+                return (
+                    <div>
+                        <h1>{this.state.title}</h1>
+                        <button onClick={changeGreeting}>Only for devs ;)</button>
+                        <Languages />
+                        <Other />
+                    </div>
+                )
+                // return <h1>Hello, I'm render() of Comp1.</h1>
+                // return tworzy: return React.createElement('h1', null, 'Hello, I\'m render() of Comp1.');
+            }
+        };
+
+        class Languages extends React.Component {
+            render() {
+                const webs = ['HTML5', 'CSS3', 'JS (ES6)']
+                const websList = webs.map(web => <li key={web} >{web}</li>)
+                const isShown = true;
+
+                return (
+                    <div>
+                        {isShown ? <ul> {websList} </ul> : "Niestety, nie posiadasz dostępu do tych treści."}
+                    </div>
+                )
+            }
+        };
+
+        // Mozna tez uzyc funkcji
+        // Komponenty bezstanowe, renderujące.
+        const Other = () => {
+            // hook
+            const [isOtherShown, setShowState] = React.useState(true);
+            const langs = ['C', 'C++', 'Java'];
+            const langsList = langs.map(l => <li key={l}> {l} </li>)
+            const hideIt = () => setShowState(!isOtherShown);
+
+            return (
+                <div>
+                    {isOtherShown ? <ul>{langsList}</ul> : 'Brak danych! '}
+                    <button onClick={hideIt}>Click me!</button>
+                </div>
+            )
+        }
+
+        // W prostych znacznikach:
+        // ReactDOM.render(<h1>Hello React!</h1>, document.querySelector('#hello'))
+        ReactDOM.render(<Greeting />, document.querySelector('#greeting'))
+    </script>
+</body>
+
+</html>
