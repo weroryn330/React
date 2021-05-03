@@ -29,8 +29,15 @@
             // extends React.Component wymaga użycia render()
             // zmienne renderowane są tylko raz, w czasie renderowania komponentu
             state = {
-                title: 'Witaj w ReactJS'
+                title: 'Witaj w ReactJS',
+                showNames: true
             }
+
+            hideIt() {
+                this.setState({ showNames: !this.state.showNames })
+            }
+
+
             render() {
                 // Mozna zwracac tylko jeden element, czyli mozna zamknac np. w div wszystkie pozostale.
                 const changeGreeting = () => {
@@ -43,8 +50,9 @@
                     <div>
                         <h1>{this.state.title}</h1>
                         <button onClick={changeGreeting}>Only for devs ;)</button>
+                        <button onClick={() => this.hideIt()}>Click me!</button>
                         <Languages />
-                        <Other />
+                        <Other hook={this.state.showNames} />
                     </div>
                 )
                 // return <h1>Hello, I'm render() of Comp1.</h1>
@@ -68,17 +76,17 @@
 
         // Mozna tez uzyc funkcji
         // Komponenty bezstanowe, renderujące.
-        const Other = () => {
+        const Other = props => {
             // hook
-            const [isOtherShown, setShowState] = React.useState(true);
+            // const [isOtherShown, setShowState] = React.useState(true);
             const langs = ['C', 'C++', 'Java'];
             const langsList = langs.map(l => <li key={l}> {l} </li>)
-            const hideIt = () => setShowState(!isOtherShown);
+            // const hideIt = () => setShowState(!isOtherShown);
 
             return (
                 <div>
-                    {isOtherShown ? <ul>{langsList}</ul> : 'Brak danych! '}
-                    <button onClick={hideIt}>Click me!</button>
+                    {props.hook ? <ul>{langsList}</ul> : 'Brak danych! '}
+
                 </div>
             )
         }
