@@ -9,14 +9,30 @@ body {
 }
 
 .App {
-  background-image:url('./assets/cold.jpg');
+  background-image:url('./assets/normal.jpg');
   background-size: cover;
   background-position: bottom;
   transition: 0.4s ease-out;
 }
 
-.App.warm {
-  background-image: url('./assets/warm.jpg')
+.App.clear {
+  background-image:url('./assets/clouds.jpg');
+}
+
+.App.clear {
+  background-image:url('./assets/clear.jpg');
+}
+
+.App.cold, .App.snowy {
+  background-image: url('./assets/snow.jpg');
+}
+
+.App.rainy {
+  background-image: url('./assets/rainy.jpg');
+}
+
+.App.hot {
+  background-image: url('./assets/hot.jpg');
 }
 
 main {
@@ -42,7 +58,7 @@ main {
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 10px 10px 10px 10px;
 
-  box-shadow: 0px 5px rgba(0, 0, 0, 0.4);
+  box-shadow: 3px 5px rgba(0, 0, 0, 0.4);
   color: #000;
   font-size: 20px;
 }
@@ -82,7 +98,15 @@ main {
   font-weight: 800;
 }
 
-.weatherBox .weatherType {
+.weatherBox .weatherType, .weatherBox .wind, .weatherBox .pressure{
   font-size: 5vh;
   font-weight: 700;
+  text-shadow: 2px 3px rgba(0, 0, 0, 0.6);
+}
+
+.weatherBox .wind, .weatherBox .pressure {
+  font-size: 3vh;
+  font-weight: 700;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.6);
+  margin-top: 2px;
 }

@@ -36,7 +36,19 @@ function App() {
   }
 
   return (
-    <div className="App">
+    <div className={(typeof weather.main != "undefined") ?
+      ((weather.weather[0].main === "Rain") ?
+        'App rainy'
+        : (weather.weather[0].main === "Snow") ?
+          'App snowy'
+          : (weather.main.temp > 20) ?
+            'App hot'
+            : (weather.main.temp < 0) ?
+              'App cold'
+              : (weather.weather[0].main === "Clouds") ?
+                'App clouds'
+                : 'App clear')
+      : 'App'}>
       <main>
         <div className="searchBox">
           <input type="text"
@@ -47,16 +59,20 @@ function App() {
             onKeyPress={search}
           />
         </div>
-        <div>
-          <div className="infoBox">
-            <div className="city">Gliwice, PL</div>
-            <div className="date">{dateBuilder(new Date())}</div>
+        {(typeof weather.main != "undefined") ? (
+          <div>
+            <div className="infoBox">
+              <div className="city">{weather.name}, {weather.sys.country}</div>
+              <div className="date">{dateBuilder(new Date())}</div>
+            </div>
+            <div className="weatherBox">
+              <div className="temperature">{weather.main.temp}°C </div>
+              <div className="weatherType">{weather.weather[0].main}</div>
+              <div className="wind">Wind: {weather.wind.speed} m/s</div>
+              <div className="pressure">Pressure: {weather.main.pressure}hPa</div>
+            </div>
           </div>
-          <div className="weatherBox">
-            <div className="temperature"> 15°C</div>
-            <div className="weatherType">Sunny</div>
-          </div>
-        </div>
+        ) : ('')}
       </main>
     </div>
   );
